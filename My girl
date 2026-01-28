@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To. My Girl</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Mali:wght@500&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        /* CSS ทั้งหมดรวมอยู่ที่นี่ */
+        body {
+            background-color: #f0e6f6;
+            font-family: 'Mali', cursive;
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #envelope {
+            position: relative;
+            width: 280px;
+            height: 180px;
+            border-bottom-left-radius: 6px;
+            border-bottom-right-radius: 6px;
+            background-color: #d9534f;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+        }
+
+        .flap {
+            position: absolute;
+            top: 0;
+            width: 0;
+            height: 0;
+            border-left: 140px solid transparent;
+            border-right: 140px solid transparent;
+            border-bottom: 82px solid transparent;
+            border-top: 98px solid #d9534f;
+            transform-origin: top;
+            z-index: 5;
+        }
+
+        .pocket {
+            position: absolute;
+            top: 0;
+            border-left: 140px solid #f5a3a2;
+            border-right: 140px solid #f5a3a2;
+            border-bottom: 90px solid #ff6f61;
+            border-top: 90px solid transparent;
+            border-bottom-left-radius: 6px;
+            border-bottom-right-radius: 6px;
+            z-index: 4;
+        }
+
+        .letter {
+            position: absolute;
+            background-color: #fff;
+            width: 90%;
+            height: 90%;
+            top: 5%;
+            left: 5%;
+            border-radius: 6px;
+            box-shadow: 0 2px 26px rgba(0, 0, 0, 0.12);
+            z-index: 2;
+            transition: 0.5s;
+        }
+
+        /* --- ส่วนจัดการข้อความ --- */
+        .words {
+            position: absolute;
+            left: 10%;
+            width: 80%;
+            font-size: 0; /* ซ่อนของเก่า */
+        }
+
+        .words::before {
+            display: block;
+            color: #d9534f;
+            text-align: center;
+        }
+
+        .line1 { top: 15%; width: 90% !important; }
+        .line1::before {
+            content: "To. My girl";
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-align: left;
+        }
+
+        .line2 { top: 35%; }
+        .line2::before {
+            content: "เป็นแฟนกันได้ไหมคะ";
+            font-size: 0.95rem;
+        }
+
+        .line3 { top: 55%; }
+        .line3::before {
+            content: "เค้าอยากเก็บความน่ารักของเธอ";
+            font-size: 0.85rem;
+        }
+
+        .line4 { top: 75%; }
+        .line4::before {
+            content: "ไว้ดูคนเดียวแล้วค่ะ";
+            font-size: 0.85rem;
+        }
+
+        /* Animation */
+        .open .flap {
+            transform: rotateX(180deg);
+            z-index: 1;
+            transition: 0.5s;
+        }
+        .open .letter {
+            transform: translateY(-110px);
+            z-index: 3;
+        }
+        
+        /* สไตล์ปุ่ม Reset */
+        .reset {
+            position: fixed;
+            bottom: 50px;
+            width: 100%;
+            text-align: center;
+        }
+        .reset button {
+            background: white;
+            border: 2px solid #d9534f;
+            color: #d9534f;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Responsive สำหรับมือถือ */
+        @media screen and (max-width: 480px) {
+            #envelope { width: 240px; height: 160px; }
+            .flap { border-left: 120px solid transparent; border-right: 120px solid transparent; border-top: 90px solid #d9534f; }
+            .pocket { border-left: 120px solid #f5a3a2; border-right: 120px solid #f5a3a2; border-bottom: 80px solid #ff6f61; }
+            .words.line1::before { font-size: 1.1rem; }
+            .words::before { font-size: 0.75rem !important; white-space: nowrap; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="envelope" class="close">
+        <div class="flap"></div>
+        <div class="pocket"></div>
+        <div class="letter">
+            <div class="words line1"></div>
+            <div class="words line2"></div>
+            <div class="words line3"></div>
+            <div class="words line4"></div>
+        </div>
+    </div>
+
+    <div class="reset">
+        <button id="open">เปิดจดหมาย</button>
+        <button id="reset">ปิด</button>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            const env = $("#envelope");
+            $("#open, #envelope").click(function () {
+                env.removeClass("close").addClass("open");
+            });
+            $("#reset").click(function (e) {
+                e.stopPropagation();
+                env.removeClass("open").addClass("close");
+            });
+        });
+    </script>
+</body>
+</html>
